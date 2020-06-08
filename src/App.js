@@ -1,16 +1,16 @@
 import React from 'react';
-import logo from './trivia.png';
-import './App.css';
+import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+
+import Home from './components/Home';
 
 export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          SUA VEZ
-        </p>
-      </header>
+    <div>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+        </Switch>
+      </Router>
     </div>
   );
 }
