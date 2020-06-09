@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { generateToken } from '../actions/index';
+import { generateToken, getUserData } from '../actions/index';
 
 class LoginArea extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class LoginArea extends Component {
     this.state = {
       name: '',
       email: '',
-      url: '',
+      avatar: '',
     };
     this.requestAPIToken = this.requestAPIToken.bind(this);
   }
@@ -29,7 +29,7 @@ class LoginArea extends Component {
 
   changeEmail(e) {
     const hash = md5(e.target.value);
-    this.setState({ email: e.target.value, url: hash });
+    this.setState({ email: e.target.value, avatar: hash });
   }
 
   isDisabled() {
@@ -39,12 +39,14 @@ class LoginArea extends Component {
   }
 
   requestAPIToken() {
-    const { storeToken } = this.props;
+    const { storeToken, saveUserData } = this.props;
+    const { name, avatar } = this.state;
     storeToken();
+    saveUserData(name, avatar);
   }
 
   render() {
-    const { name, email, url } = this.state;
+    const { name, email, avatar } = this.state;
     return (
       <div className="login-area">
         <label htmlFor="name">Nome do Jogador</label>
@@ -63,7 +65,7 @@ class LoginArea extends Component {
           onChange={(e) => this.changeEmail(e)}
           value={email}
         />
-        <img src={`https://www.gravatar.com/avatar/${url}`} alt="avatar" />
+        <img src={`https://www.gravatar.com/avatar/${avatar}`} alt="avatar" />
         <Link to="/gamepage">
           <button
             type="button"
@@ -82,6 +84,7 @@ class LoginArea extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   storeToken: () => dispatch(generateToken()),
+  saveUserData: (name, avatar) => dispatch(getUserData(name, avatar)),
 });
 
 const mapStateToProps = (state) => ({
@@ -92,5 +95,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(LoginArea);
 
 LoginArea.propTypes = {
   storeToken: PropTypes.func.isRequired,
+  saveUserData: PropTypes.func.isRequired,
   tolkien: PropTypes.shape({ token: '' }).isRequired,
 };
