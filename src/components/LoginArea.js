@@ -45,10 +45,10 @@ class LoginArea extends Component {
     saveUserData(name, avatar);
   }
 
-  render() {
-    const { name, email, avatar } = this.state;
+  renderNameInput() {
+    const { name } = this.state;
     return (
-      <div className="login-area">
+      <div>
         <label htmlFor="name">Nome do Jogador</label>
         <input
           type="text"
@@ -57,6 +57,14 @@ class LoginArea extends Component {
           onChange={(e) => this.changeName(e)}
           value={name}
         />
+      </div>
+    );
+  }
+
+  renderEmailInput() {
+    const { email } = this.state;
+    return (
+      <div>
         <label htmlFor="email">E-mail do Gravatar</label>
         <input
           type="email"
@@ -65,6 +73,16 @@ class LoginArea extends Component {
           onChange={(e) => this.changeEmail(e)}
           value={email}
         />
+      </div>
+    );
+  }
+
+  render() {
+    const { avatar } = this.state;
+    return (
+      <div className="login-area">
+        {this.renderNameInput()}
+        {this.renderEmailInput()}
         <img src={`https://www.gravatar.com/avatar/${avatar}`} alt="avatar" />
         <Link to="/gamepage">
           <button
