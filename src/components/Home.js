@@ -3,6 +3,8 @@ import logo from '../trivia.png';
 import '../App.css';
 import ButtonToConfig from './ButtonToConfig';
 
+// teste
+
 export default class Home extends Component {
   render() {
     return (
