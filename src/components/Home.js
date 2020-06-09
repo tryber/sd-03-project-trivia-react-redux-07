@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from '../trivia.png';
 import '../App.css';
+import ButtonToConfig from './ButtonToConfig';
 
 export default class Home extends Component {
   render() {
@@ -10,6 +11,7 @@ export default class Home extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <p>SUA VEZ</p>
           {/* Importar link que leva para StartScreen */}
+          <ButtonToConfig />
         </header>
       </div>
     );
