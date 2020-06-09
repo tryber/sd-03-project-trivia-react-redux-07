@@ -12,7 +12,6 @@ export default function App() {
           <Route exact path="/Configuration" component={ConfigurationScreen} />
           <Route exact path="/" component={Home} />
           <Route exact path="/gamepage" component={GameScreen} />
-            {/* Rota para a tela apos clicar no botão jogar */}
         </Switch>
       </Router>
     </div>
