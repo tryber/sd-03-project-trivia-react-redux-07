@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import md5 from 'md5';
 
 export default class LoginArea extends Component {
   constructor(props) {
@@ -6,6 +7,7 @@ export default class LoginArea extends Component {
     this.state = {
       name: '',
       email: '',
+      url: '',
     };
   }
 
@@ -14,7 +16,8 @@ export default class LoginArea extends Component {
   }
 
   changeEmail(e) {
-    this.setState({ email: e.target.value });
+    const hash = md5(e.target.value);
+    this.setState({ email: e.target.value, url: hash });
   }
 
   isDisabled() {
@@ -23,11 +26,15 @@ export default class LoginArea extends Component {
     return false;
   }
 
+  startGame() {
+
+  }
+
   render() {
-    const { name, email } = this.state;
+    const { name, email, url } = this.state;
     return (
       <div className="login-area">
-        <label htmlFor="name">E-mail do Gravatar</label>
+        <label htmlFor="name">Nome do Jogador</label>
         <input
           type="text"
           data-testid="input-player-name"
@@ -35,7 +42,7 @@ export default class LoginArea extends Component {
           onChange={(e) => this.changeName(e)}
           value={name}
         />
-        <label htmlFor="email">Nome do Jogador</label>
+        <label htmlFor="email">E-mail do Gravatar</label>
         <input
           type="email"
           data-testid="input-gravatar-email"
@@ -43,10 +50,12 @@ export default class LoginArea extends Component {
           onChange={(e) => this.changeEmail(e)}
           value={email}
         />
+        <img src={`https://www.gravatar.com/avatar/${url}`} alt="avatar" />
         <button
           type="button"
           className="btn-play"
           data-testid="btn-play"
+          onClick={() => this.startGame()}
           disabled={this.isDisabled()}
         >
           JOGAR
