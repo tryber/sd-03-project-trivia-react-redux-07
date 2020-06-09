@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import logo from '../trivia.png';
 import '../App.css';
 import TemporaryButton from './TemporaryButton.js';
+import TestRequestQuestions from './TestRequestQuestions.js';
 
 export default class Home extends Component {
   render() {
@@ -12,9 +13,9 @@ export default class Home extends Component {
           <img src={logo} className='App-logo' alt='logo' />
           <p>SUA VEZ</p>
           <TemporaryButton />
+          <TestRequestQuestions />
         </header>
       </div>
     );
   }
 }
-

@@ -1,4 +1,4 @@
-import { GENERATE_TOKEN } from '../actions/index';
+import { GENERATE_TOKEN, GENERATE_QUESTIONS } from '../actions/index';
 
 const initialState = {
   token: '',
