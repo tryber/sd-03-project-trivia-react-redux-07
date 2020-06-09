@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
-
 import Home from './components/Home';
 import ConfigurationScreen from './components/ConfigurationScreen';
 
