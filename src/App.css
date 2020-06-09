@@ -53,3 +53,26 @@
     transform: translate3d(4px, 0, 0);
   }
 }
+
+.login-area {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-play {
+  background-color: rgb(14, 165, 34);
+  color: white;
+  height: 40px;
+  margin-top: 20px;
+  width: 150px;
+}
+
+label {
+  margin-top: 20px;
+}
+
+input {
+  margin-top: 10px;
+  width: 150px;
+}
