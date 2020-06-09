@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class LoginArea extends Component {
+import { generateToken } from '../actions/index';
+
+class LoginArea extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: '',
       email: '',
     };
+    this.requestAPIToken = this.requestAPIToken.bind(this);
+  }
+
+  componentDidUpdate() {
+    console.log('entrouNoDidUpdate');
+    const { tolkien } = this.props;
+    localStorage.setItem('token', tolkien);
   }
 
   changeName(e) {
@@ -21,6 +32,11 @@ export default class LoginArea extends Component {
     const { name, email } = this.state;
     if (name === '' || email === '') return true;
     return false;
+  }
+
+  requestAPIToken() {
+    const { storeToken } = this.props;
+    storeToken();
   }
 
   render() {
@@ -47,6 +63,7 @@ export default class LoginArea extends Component {
           type="button"
           className="btn-play"
           data-testid="btn-play"
+          onClick={this.requestAPIToken}
           disabled={this.isDisabled()}
         >
           JOGAR
@@ -55,3 +72,18 @@ export default class LoginArea extends Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  storeToken: () => dispatch(generateToken()),
+});
+
+const mapStateToProps = (state) => ({
+  tolkien: state.apiReducer.token,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginArea);
+
+LoginArea.propTypes = {
+  storeToken: PropTypes.func.isRequired,
+  tolkien: PropTypes.shape({ token: '' }).isRequired,
+};

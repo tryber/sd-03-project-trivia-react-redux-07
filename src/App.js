@@ -10,6 +10,7 @@ export default function App() {
         <Switch>
           <Route exact path="/Configuration" component={ConfigurationScreen} />
           <Route exact path="/" component={Home} />
+          {/* Rota para a tela apos clicar no botão jogar */}
         </Switch>
       </Router>
     </div>
