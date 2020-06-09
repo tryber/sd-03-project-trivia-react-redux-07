@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import md5 from 'md5';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
-export default class LoginArea extends Component {
+import { generateToken } from '../actions/index';
+
+class LoginArea extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -9,6 +14,13 @@ export default class LoginArea extends Component {
       email: '',
       url: '',
     };
+    this.requestAPIToken = this.requestAPIToken.bind(this);
+  }
+
+  componentDidUpdate() {
+    console.log('entrouNoDidUpdate');
+    const { tolkien } = this.props;
+    localStorage.setItem('token', tolkien);
   }
 
   changeName(e) {
@@ -26,8 +38,9 @@ export default class LoginArea extends Component {
     return false;
   }
 
-  startGame() {
-
+  requestAPIToken() {
+    const { storeToken } = this.props;
+    storeToken();
   }
 
   render() {
@@ -51,16 +64,33 @@ export default class LoginArea extends Component {
           value={email}
         />
         <img src={`https://www.gravatar.com/avatar/${url}`} alt="avatar" />
-        <button
-          type="button"
-          className="btn-play"
-          data-testid="btn-play"
-          onClick={() => this.startGame()}
-          disabled={this.isDisabled()}
-        >
-          JOGAR
-        </button>
+        <Link to="/gamepage">
+          <button
+            type="button"
+            className="btn-play"
+            data-testid="btn-play"
+            onClick={this.requestAPIToken}
+            disabled={this.isDisabled()}
+          >
+            JOGAR
+          </button>
+        </Link>
       </div>
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  storeToken: () => dispatch(generateToken()),
+});
+
+const mapStateToProps = (state) => ({
+  tolkien: state.apiReducer.token,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginArea);
+
+LoginArea.propTypes = {
+  storeToken: PropTypes.func.isRequired,
+  tolkien: PropTypes.shape({ token: '' }).isRequired,
+};
