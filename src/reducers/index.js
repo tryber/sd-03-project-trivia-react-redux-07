@@ -1,7 +1,7 @@
-// import { combineReducers } from 'redux';
+import { combineReducers } from 'redux';
 
-// import moduleName from './nomeDoReducer';
+import apiReducer from './apiReducer';
 
-// const rootReducer = combineReducers({reducerImportado});
+const rootReducer = combineReducers({ apiReducer });
 
-// export default rootReducer;
+export default rootReducer;
