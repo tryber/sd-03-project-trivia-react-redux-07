@@ -1,21 +1,14 @@
-import { apiTokenService } from "../services/apiTokenService.js";
-import { requestQuestions } from "../services/apiQuestionsService.js";
+import apiTokenService from '../services/apiTokenService.js';
 
-export const GENERATE_TOKEN = "GENERATE_TOKEN";
-export const GENERATE_QUESTIONS = "GENERATE_QUESTIONS";
+export const GENERATE_TOKEN = 'GENERATE_TOKEN';
 
 const storeToken = (payload) => ({
   type: GENERATE_TOKEN,
   payload,
 });
 
-const storeQuestions = (payload) => ({
-  type: GENERATE_QUESTIONS,
-  payload,
-});
-
-export const generateToken = () => {
-  return (dispatch) => {
-    return apiTokenService().then((response) => dispatch(storeToken(response)));
-  };
-};
+export const generateToken = () => (
+  (dispatch) => {
+    apiTokenService().then((response) => dispatch(storeToken(response)));
+  }
+);
