@@ -1,7 +1,8 @@
-import { GENERATE_TOKEN } from '../actions/index';
+import { GENERATE_TOKEN, STORE_QUESTIONS } from '../actions/index';
 
 const initialState = {
   token: '',
+  questions: [],
 };
 
 const apiReducer = (state = initialState, action) => {
@@ -9,6 +10,12 @@ const apiReducer = (state = initialState, action) => {
     case GENERATE_TOKEN:
       // const { token } = action.payload.data;
       return { ...state, token: action.payload.data.token };
+
+    case STORE_QUESTIONS:
+      return {
+        ...state,
+        questions: [...action.payload.data.results],
+      }
 
     default:
       return state;

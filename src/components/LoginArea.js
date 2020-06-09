@@ -17,12 +17,6 @@ class LoginArea extends Component {
     this.requestAPIToken = this.requestAPIToken.bind(this);
   }
 
-  componentDidUpdate() {
-    console.log('entrouNoDidUpdate');
-    const { tolkien } = this.props;
-    localStorage.setItem('token', tolkien);
-  }
-
   changeName(e) {
     this.setState({ name: e.target.value });
   }
@@ -41,6 +35,8 @@ class LoginArea extends Component {
   requestAPIToken() {
     const { storeToken } = this.props;
     storeToken();
+    const { tolkien } = this.props;
+    localStorage.setItem('token', tolkien);
   }
 
   render() {

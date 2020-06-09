@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+
 import Header from './Header';
+import TestButton from './testButton';
 
 
 export default class GameScreen extends Component {
@@ -7,6 +9,7 @@ export default class GameScreen extends Component {
     return (
       <div>
         <Header />
+        <TestButton />
       </div>
     );
   }
