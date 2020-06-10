@@ -11,10 +11,6 @@ class Quiz extends React.Component {
     };
   }
 
-  componentDidMount() {
-    this.loadQuestions();
-  }
-
   loadQuestions() {
     const { tolkien, getQuestions } = this.props;
     getQuestions(tolkien);
@@ -31,29 +27,55 @@ class Quiz extends React.Component {
     return orderedAnswers.sort(() => Math.random() - 0.5);
   }
 
+  renderAnswers() {
+    return this.shuffleAnswers().map((e, i) => {
+      if (e[1] === 'correct') {
+        i -= 1;
+        return (
+          <button
+            type="button"
+            key="correct-answer"
+            data-testid="correct-answer"
+          >
+            {e[0]}
+          </button>
+        );
+      }
+      return (
+        <button
+          type="button"
+          key={`wrong-answer${i}`}
+          data-testid={`wrong-answer${i}`}
+        >
+          {e}
+        </button>
+      );
+    });
+  }
+
   render() {
-    const { questions, tolkien } = this.props;
+    const { questions } = this.props;
     const { index } = this.state;
-    console.log(questions)
-    if (questions) {
+    if (questions.length > 0) {
       return (
         <div>
           <p data-testid="question-category">{`Categoria: ${questions[index].category}`}</p>
           <p data-testid="question-text">{questions[index].question}</p>
-          {this.shuffleAnswers().map((e, i) => {
-            if (e[1] === 'correct') {
-              i -= 1;
-              return <button type="button" key="correct-answer" data-testid="correct-answer">{e[0]}</button>;
-            }
-            return <button type="button" key={`wrong-answer${i}`} data-testid={`wrong-answer${i}`}>{e}</button>;
-          })}
-          {(index < 4) && <button type="button" onClick={() => this.clickToNext()}>Próxima</button>}
+          {this.renderAnswers()}
+          {(index < 4) && (
+            <button
+              type="button"
+              onClick={() => this.clickToNext()}
+            >
+              Próxima
+            </button>
+          )}
           {(index === 4) && <button type="button">Finalizar</button>}
         </div>
       );
     }
     return (
-      <p>Teste</p>
+      <p>Loadind Questions</p>
     );
   }
 }
