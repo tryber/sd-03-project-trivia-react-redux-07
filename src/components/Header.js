@@ -34,4 +34,5 @@ Header.propTypes = {
 };
 Header.defaultProps = {
   userData: [],
+  score: PropTypes.number.isRequired,
 };

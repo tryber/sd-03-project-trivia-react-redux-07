@@ -3,6 +3,7 @@ import md5 from 'md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+
 import { generateToken, getUserData } from '../actions/index';
 
 class LoginArea extends Component {
@@ -102,4 +103,4 @@ export default connect(null, mapDispatchToProps)(LoginArea);
 LoginArea.propTypes = {
   storeToken: PropTypes.func.isRequired,
   saveUserData: PropTypes.func.isRequired,
-};
+}
