@@ -10,13 +10,11 @@ const apiReducer = (state = initialState, action) => {
     case GENERATE_TOKEN:
       // const { token } = action.payload.data;
       return { ...state, token: action.payload.data.token };
-
     case STORE_QUESTIONS:
       return {
         ...state,
         questions: [...action.payload.data.results],
-      }
-
+      };
     default:
       return state;
   }
