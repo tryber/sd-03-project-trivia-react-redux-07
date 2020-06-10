@@ -1,17 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { generateQuestions, updateScore } from '../actions/index';
+import {
+  generateQuestions, updateScore, restoreClock, getDifficulty,
+} from '../actions/index';
+import Clock from './Clock';
 
 class Quiz extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       index: 0,
+      disabled: false,
     };
   }
 
   componentDidMount() {
+    const { restore } = this.props;
+    restore();
     this.loadQuestions();
   }
 
@@ -21,7 +27,9 @@ class Quiz extends React.Component {
   }
 
   clickToNext() {
-    this.setState((state) => ({ index: state.index + 1 }));
+    const { restore } = this.props;
+    restore();
+    this.setState((state) => ({ index: state.index + 1, disabled: false }));
   }
 
   shuffleAnswers() {
@@ -31,15 +39,36 @@ class Quiz extends React.Component {
     return orderedAnswers.sort(() => Math.random() - 0.5);
   }
 
-  sumPoints() {
-    const { sumPoints, time, difficulty } = this.props;
-    const points = 10 + (time * difficulty);
+  clickRigthAnswer() {
+    const { sumPoints, time, questions } = this.props;
+    const { index } = this.state;
+    let difPoints;
+    const { difficulty } = questions[index];
+    if (difficulty === 'hard') { difPoints = 3; }
+    if (difficulty === 'medium') { difPoints = 2; }
+    if (difficulty === 'easy') { difPoints = 1; }
+    const points = 10 + (time * difPoints);
+    this.setState({ disabled: true });
     sumPoints(points);
+    const storage = JSON.parse(localStorage.getItem('playerInfo'));
+    const newStorage = {
+      player: {
+        name: storage.player.name,
+        assertions: storage.player.assertions + 1,
+        score: storage.player.score + points,
+        gravatarEmail: storage.player.gravatarEmail,
+      },
+    };
+    localStorage.setItem('playerInfo', JSON.stringify(newStorage));
+  }
+
+  clickWrongAnswer() {
+    this.setState({ disabled: true });
   }
 
   render() {
     const { questions } = this.props;
-    const { index } = this.state;
+    const { index, disabled } = this.state;
 
     if (questions.length > 0) {
       return (
@@ -49,12 +78,13 @@ class Quiz extends React.Component {
           {this.shuffleAnswers().map((e, i) => {
             if (e[1] === 'correct') {
               i -= 1;
-              return <button type="button" onClick={() => this.sumPoints()} data-testid="correct-answer">{e[0]}</button>;
+              return <button type="button" disabled={disabled} onClick={() => this.clickRigthAnswer()} data-testid="correct-answer">{e[0]}</button>;
             }
-            return <button type="button" data-testid={`wrong-answer${i}`}>{e}</button>;
+            return <button type="button" disabled={disabled} onClick={() => this.clickWrongAnswer()} data-testid={`wrong-answer${i}`}>{e}</button>;
           })}
           {(index < 4) && <button type="button" onClick={() => this.clickToNext()}>Próxima</button>}
           {(index === 4) && <button type="button">Finalizar</button>}
+          <Clock />
         </div>
       );
     }
@@ -67,12 +97,15 @@ class Quiz extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
   getQuestions: (e) => dispatch(generateQuestions(e)),
   sumPoints: (points) => dispatch(updateScore(points)),
+  restore: () => dispatch(restoreClock()),
+  setDifficulty: (e) => dispatch(getDifficulty(e)),
 });
 
 const mapStateToProps = (state) => ({
   tolkien: state.apiReducer.token,
   questions: state.apiReducer.questions,
   difficulty: state.difficultyReducer,
+  time: state.counterReducer.count,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
@@ -81,4 +114,5 @@ Quiz.propTypes = {
   getQuestions: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   tolkien: PropTypes.string.isRequired,
+  restore: PropTypes.func.isRequired,
 };

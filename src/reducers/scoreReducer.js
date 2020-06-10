@@ -4,7 +4,8 @@ const INITIAL_STATE = 0;
 
 const scoreReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case UPDATE_SCORE: return state + action.points;
+    case UPDATE_SCORE: console.log(action.points)
+    return state + action.points;
     default: return state;
   }
 };
