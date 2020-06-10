@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { generateQuestions } from '../actions/index';
+
+import { generateQuestions, restoreClock } from '../actions/index';
+import Clock from './Clock.js';
 
 class Quiz extends React.Component {
   constructor(props) {
@@ -12,6 +14,7 @@ class Quiz extends React.Component {
   }
 
   componentDidMount() {
+    this.props.restore();
     this.loadQuestions();
   }
 
@@ -21,6 +24,7 @@ class Quiz extends React.Component {
   }
 
   clickToNext() {
+    this.props.restore();
     this.setState((state) => ({ index: state.index + 1 }));
   }
 
@@ -49,6 +53,7 @@ class Quiz extends React.Component {
           })}
           {(index < 4) && <button type="button" onClick={() => this.clickToNext()}>Próxima</button>}
           {(index === 4) && <button type="button">Finalizar</button>}
+          <Clock />
         </div>
       );
     }
@@ -60,6 +65,7 @@ class Quiz extends React.Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getQuestions: (e) => dispatch(generateQuestions(e)),
+  restore: () => dispatch(restoreClock()),
 });
 
 const mapStateToProps = (state) => ({
@@ -73,4 +79,5 @@ Quiz.propTypes = {
   getQuestions: PropTypes.func.isRequired,
   questions: PropTypes.arrayOf(PropTypes.object).isRequired,
   tolkien: PropTypes.string.isRequired,
+  restore: PropTypes.func.isRequired,
 };
