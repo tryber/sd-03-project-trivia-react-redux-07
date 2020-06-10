@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { generateQuestions } from '../actions/index';
+import { generateQuestions, updateScore } from '../actions/index';
 
 class Quiz extends React.Component {
   constructor(props) {
@@ -31,6 +31,12 @@ class Quiz extends React.Component {
     return orderedAnswers.sort(() => Math.random() - 0.5);
   }
 
+  sumPoints() {
+    const { sumPoints, time, difficulty } = this.props;
+    const points = 10 + (time * difficulty);
+    sumPoints(points);
+  }
+
   render() {
     const { questions } = this.props;
     const { index } = this.state;
@@ -43,7 +49,7 @@ class Quiz extends React.Component {
           {this.shuffleAnswers().map((e, i) => {
             if (e[1] === 'correct') {
               i -= 1;
-              return <button type="button" data-testid="correct-answer">{e[0]}</button>;
+              return <button type="button" onClick={() => this.sumPoints()} data-testid="correct-answer">{e[0]}</button>;
             }
             return <button type="button" data-testid={`wrong-answer${i}`}>{e}</button>;
           })}
@@ -53,18 +59,20 @@ class Quiz extends React.Component {
       );
     }
     return (
-      <p>Teste</p>
+      <p>Loading Questions</p>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
   getQuestions: (e) => dispatch(generateQuestions(e)),
+  sumPoints: (points) => dispatch(updateScore(points)),
 });
 
 const mapStateToProps = (state) => ({
   tolkien: state.apiReducer.token,
   questions: state.apiReducer.questions,
+  difficulty: state.difficultyReducer,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz);

@@ -5,6 +5,7 @@ export const GENERATE_TOKEN = 'GENERATE_TOKEN';
 export const STORE_QUESTIONS = 'STORE_QUESTIONS';
 export const SAVE_USER_DATA = 'SAVE_USER_DATA';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
+export const CHANGE_DIFFICULTY = 'CHANGE_DIFFICULTY';
 
 
 const storeToken = (payload) => ({
