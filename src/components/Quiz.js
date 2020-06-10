@@ -32,10 +32,10 @@ class Quiz extends React.Component {
   }
 
   render() {
-    const { questions } = this.props;
+    const { questions, tolkien } = this.props;
     const { index } = this.state;
-
-    if (questions.length > 0) {
+    console.log(questions)
+    if (questions) {
       return (
         <div>
           <p data-testid="question-category">{`Categoria: ${questions[index].category}`}</p>
@@ -43,9 +43,9 @@ class Quiz extends React.Component {
           {this.shuffleAnswers().map((e, i) => {
             if (e[1] === 'correct') {
               i -= 1;
-              return <button type="button" data-testid="correct-answer">{e[0]}</button>;
+              return <button type="button" key="correct-answer" data-testid="correct-answer">{e[0]}</button>;
             }
-            return <button type="button" data-testid={`wrong-answer${i}`}>{e}</button>;
+            return <button type="button" key={`wrong-answer${i}`} data-testid={`wrong-answer${i}`}>{e}</button>;
           })}
           {(index < 4) && <button type="button" onClick={() => this.clickToNext()}>Próxima</button>}
           {(index === 4) && <button type="button">Finalizar</button>}

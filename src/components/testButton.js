@@ -14,14 +14,13 @@ class TestButton extends React.Component {
   }
 
   componentDidMount() {
-
     this.loadQuestions()
   }
 
   render() {
     return (
       <div>
-        <p>Teste</p>
+        <button>Teste!</button>
       </div>
     );
   }
@@ -33,6 +32,6 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state) => ({
   tolkien: state.apiReducer.token,
-});
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(TestButton);
