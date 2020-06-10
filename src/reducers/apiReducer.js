@@ -8,7 +8,7 @@ const initialState = {
 const apiReducer = (state = initialState, action) => {
   switch (action.type) {
     case GENERATE_TOKEN:
-      // const { token } = action.payload.data;
+      localStorage.setItem('token', action.payload.data.token);
       return { ...state, token: action.payload.data.token };
     case STORE_QUESTIONS:
       return {

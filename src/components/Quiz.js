@@ -71,6 +71,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
 
 Quiz.propTypes = {
   getQuestions: PropTypes.func.isRequired,
-  questions: PropTypes.arrayOf(PropTypes.string).isRequired,
-  tolkien: PropTypes.shape({ token: '' }).isRequired,
+  questions: PropTypes.arrayOf(PropTypes.object).isRequired,
+  tolkien: PropTypes.string.isRequired,
 };

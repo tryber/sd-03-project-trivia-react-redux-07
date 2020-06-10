@@ -29,6 +29,9 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
-  userData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  userData: PropTypes.arrayOf(PropTypes.object),
   score: PropTypes.number.isRequired,
+};
+Header.defaultProps = {
+  userData: [],
 };

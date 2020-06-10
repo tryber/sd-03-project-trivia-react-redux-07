@@ -31,10 +31,9 @@ class LoginArea extends Component {
   }
 
   clickToStartGame() {
-    const { storeToken, saveUserData, tolkien } = this.props;
+    const { storeToken, saveUserData } = this.props;
     const { name, avatar } = this.state;
     storeToken();
-    localStorage.setItem('token', tolkien);
     saveUserData(name, avatar);
   }
 
@@ -98,14 +97,9 @@ const mapDispatchToProps = (dispatch) => ({
   saveUserData: (name, avatar) => dispatch(getUserData(name, avatar)),
 });
 
-const mapStateToProps = (state) => ({
-  tolkien: state.apiReducer.token,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginArea);
+export default connect(null, mapDispatchToProps)(LoginArea);
 
 LoginArea.propTypes = {
   storeToken: PropTypes.func.isRequired,
   saveUserData: PropTypes.func.isRequired,
-  tolkien: PropTypes.shape({ token: '' }).isRequired,
 };
