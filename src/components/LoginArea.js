@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import md5 from 'md5';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
-import { generateToken } from '../actions/index';
+import { Link } from 'react-router-dom';
+import { generateToken, getUserData } from '../actions/index';
 
 class LoginArea extends Component {
   constructor(props) {
@@ -10,14 +11,8 @@ class LoginArea extends Component {
     this.state = {
       name: '',
       email: '',
+      avatar: '',
     };
-    this.requestAPIToken = this.requestAPIToken.bind(this);
-  }
-
-  componentDidUpdate() {
-    console.log('entrouNoDidUpdate');
-    const { tolkien } = this.props;
-    localStorage.setItem('token', tolkien);
   }
 
   changeName(e) {
@@ -25,7 +20,8 @@ class LoginArea extends Component {
   }
 
   changeEmail(e) {
-    this.setState({ email: e.target.value });
+    const hash = md5(e.target.value);
+    this.setState({ email: e.target.value, avatar: hash });
   }
 
   isDisabled() {
@@ -34,16 +30,19 @@ class LoginArea extends Component {
     return false;
   }
 
-  requestAPIToken() {
-    const { storeToken } = this.props;
+  clickToStartGame() {
+    const { storeToken, saveUserData, tolkien } = this.props;
+    const { name, avatar } = this.state;
     storeToken();
+    localStorage.setItem('token', tolkien);
+    saveUserData(name, avatar);
   }
 
-  render() {
-    const { name, email } = this.state;
+  renderNameInput() {
+    const { name } = this.state;
     return (
-      <div className="login-area">
-        <label htmlFor="name">E-mail do Gravatar</label>
+      <div>
+        <label htmlFor="name">Nome do Jogador</label>
         <input
           type="text"
           data-testid="input-player-name"
@@ -51,7 +50,15 @@ class LoginArea extends Component {
           onChange={(e) => this.changeName(e)}
           value={name}
         />
-        <label htmlFor="email">Nome do Jogador</label>
+      </div>
+    );
+  }
+
+  renderEmailInput() {
+    const { email } = this.state;
+    return (
+      <div>
+        <label htmlFor="email">E-mail do Gravatar</label>
         <input
           type="email"
           data-testid="input-gravatar-email"
@@ -59,15 +66,28 @@ class LoginArea extends Component {
           onChange={(e) => this.changeEmail(e)}
           value={email}
         />
-        <button
-          type="button"
-          className="btn-play"
-          data-testid="btn-play"
-          onClick={this.requestAPIToken}
-          disabled={this.isDisabled()}
-        >
-          JOGAR
-        </button>
+      </div>
+    );
+  }
+
+  render() {
+    const { avatar } = this.state;
+    return (
+      <div className="login-area">
+        {this.renderNameInput()}
+        {this.renderEmailInput()}
+        <img src={`https://www.gravatar.com/avatar/${avatar}`} alt="avatar" />
+        <Link to="/gamepage">
+          <button
+            type="button"
+            className="btn-play"
+            data-testid="btn-play"
+            onClick={() => this.clickToStartGame()}
+            disabled={this.isDisabled()}
+          >
+            JOGAR
+          </button>
+        </Link>
       </div>
     );
   }
@@ -75,6 +95,7 @@ class LoginArea extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   storeToken: () => dispatch(generateToken()),
+  saveUserData: (name, avatar) => dispatch(getUserData(name, avatar)),
 });
 
 const mapStateToProps = (state) => ({
@@ -85,5 +106,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(LoginArea);
 
 LoginArea.propTypes = {
   storeToken: PropTypes.func.isRequired,
+  saveUserData: PropTypes.func.isRequired,
   tolkien: PropTypes.shape({ token: '' }).isRequired,
 };
