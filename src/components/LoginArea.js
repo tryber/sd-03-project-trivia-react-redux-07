@@ -14,13 +14,6 @@ class LoginArea extends Component {
       email: '',
       avatar: '',
     };
-    this.requestAPIToken = this.requestAPIToken.bind(this);
-  }
-
-  componentDidUpdate() {
-    console.log('entrouNoDidUpdate');
-    const { tolkien } = this.props;
-    localStorage.setItem('token', tolkien);
   }
 
   changeName(e) {
@@ -38,7 +31,7 @@ class LoginArea extends Component {
     return false;
   }
 
-  requestAPIToken() {
+  clickToStartGame() {
     const { storeToken, saveUserData } = this.props;
     const { name, avatar } = this.state;
     storeToken();
@@ -89,7 +82,7 @@ class LoginArea extends Component {
             type="button"
             className="btn-play"
             data-testid="btn-play"
-            onClick={this.requestAPIToken}
+            onClick={() => this.clickToStartGame()}
             disabled={this.isDisabled()}
           >
             JOGAR
@@ -105,14 +98,9 @@ const mapDispatchToProps = (dispatch) => ({
   saveUserData: (name, avatar) => dispatch(getUserData(name, avatar)),
 });
 
-const mapStateToProps = (state) => ({
-  tolkien: state.apiReducer.token,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginArea);
+export default connect(null, mapDispatchToProps)(LoginArea);
 
 LoginArea.propTypes = {
   storeToken: PropTypes.func.isRequired,
   saveUserData: PropTypes.func.isRequired,
-  tolkien: PropTypes.shape({ token: '' }).isRequired,
-};
+}
