@@ -45,6 +45,8 @@ class LoginArea extends Component {
       },
     };
     localStorage.setItem('state', JSON.stringify(storage));
+    const blankStorage = JSON.parse(localStorage.getItem('ranking'));
+    if (!blankStorage) localStorage.setItem('ranking', JSON.stringify([]));
   }
 
   renderNameInput() {

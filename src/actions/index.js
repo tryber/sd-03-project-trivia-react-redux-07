@@ -8,6 +8,8 @@ export const UPDATE_SCORE = 'UPDATE_SCORE';
 export const CHANGE_DIFFICULTY = 'CHANGE_DIFFICULTY';
 export const TICK_TOCK = 'TICK_TOCK';
 export const RESTORE_CLOCK = 'RESTORE_CLOCK';
+export const UPDATE_RANKING = 'UPDATE_RANKING';
+export const CLEAR_LOGIN_INFO = 'CLEAR_LOGIN_INFO';
 
 
 const storeToken = (payload) => ({
@@ -37,6 +39,17 @@ export const tik = () => ({
 
 export const restoreClock = () => ({
   type: RESTORE_CLOCK,
+});
+
+export const updateRanking = (name, avatar, score) => ({
+  type: UPDATE_RANKING,
+  name,
+  avatar,
+  score,
+});
+
+export const clearLoginInfo = () => ({
+  type: CLEAR_LOGIN_INFO,
 });
 
 export const generateToken = () => (
