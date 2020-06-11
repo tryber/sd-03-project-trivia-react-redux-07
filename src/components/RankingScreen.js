@@ -15,6 +15,7 @@ class RankingScreen extends Component {
     const { ranking } = this.props;
     return (
       <div>
+        <h1 data-testid="ranking-title">RANKING</h1>
         {ranking.sort(function (a, b) { return b.score - a.score; }).map((e, i) => (
           <div>
             <img src={`https://www.gravatar.com/avatar/${e.avatar}`} alt="avatar" />
