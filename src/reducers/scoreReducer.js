@@ -11,14 +11,14 @@ const scoreReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         points: state.points + action.points,
-      }
+      };
     }
 
     case COUNT_RIGHT_ANSWEAR: {
       return {
         ...state,
         answers: state.answers + 1,
-      }
+      };
     }
 
     default: return state;
