@@ -33,9 +33,18 @@ class LoginArea extends Component {
 
   clickToStartGame() {
     const { storeToken, saveUserData } = this.props;
-    const { name, avatar } = this.state;
+    const { name, avatar, email } = this.state;
     storeToken();
     saveUserData(name, avatar);
+    const storage = {
+      player: {
+        name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(storage));
   }
 
   renderNameInput() {
@@ -103,4 +112,4 @@ export default connect(null, mapDispatchToProps)(LoginArea);
 LoginArea.propTypes = {
   storeToken: PropTypes.func.isRequired,
   saveUserData: PropTypes.func.isRequired,
-}
+};
