@@ -5,19 +5,20 @@ import PropTypes from 'prop-types';
 import { tik } from '../actions/index';
 
 class Clock extends React.Component {
-  tick() {
-    this.props.tok();
-  }
 
   componentDidMount() {
     this.timerID = setInterval(
       () => this.tick(),
-      1000
-    )
+      1000,
+    );
   }
 
   componentWillUnmount() {
     clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.props.tok();
   }
 
   render() {
@@ -27,21 +28,22 @@ class Clock extends React.Component {
       <div>
         <p>Tempo: { time }</p>
       </div>
-    )
+    );
   }
 
 }
 
 const mapStateToProps = (state) => ({
   time: state.counterReducer.count,
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
   tok: () => dispatch(tik()),
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clock);
 
 Clock.propTypes = {
   time: PropTypes.number.isRequired,
-}
+  tok: PropTypes.func.isRequired,
+};

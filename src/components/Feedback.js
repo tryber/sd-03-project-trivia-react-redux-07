@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -14,16 +15,21 @@ class Feedback extends React.Component {
         <FeedbackAnswears totalAnswears={this.props.totalAns} />
         <p data-testid="feedback-total-question">{`Você acertou ${totalAns} questões!`}</p>
         <p data-testid="feedback-total-score">{`Fez um total de ${scorePoints} pontos`}</p>
-        <Link to={"/gamepage"}><button data-testid="btn-play-again">Jogar novamente</button></Link>
-        <Link to={"/ranking"}><button data-testid="btn-ranking">Ver Ranking</button></Link>
+        <Link to={'/gamepage'}><button data-testid="btn-play-again">Jogar novamente</button></Link>
+        <Link to={'/ranking'}><button data-testid="btn-ranking">Ver Ranking</button></Link>
       </div>
-    )
+    );
   }
 }
 
 const mapStateToProps = (state) => ({
   totalAns: state.scoreReducer.answers,
   scorePoints: state.scoreReducer.points,
-})
+});
 
 export default connect(mapStateToProps)(Feedback);
+
+Feedback.propTypes = {
+  totalAns: PropTypes.number.isRequired,
+  scorePoints: PropTypes.number.isRequired,
+};

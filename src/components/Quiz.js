@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import {
-  generateQuestions, updateScore, restoreClock, countRight
+  generateQuestions, updateScore, restoreClock, countRight,
 } from '../actions/index';
 import Clock from './Clock';
 
@@ -132,4 +132,5 @@ Quiz.propTypes = {
   time: PropTypes.number.isRequired,
   restore: PropTypes.func.isRequired,
   sumPoints: PropTypes.func.isRequired,
+  countRightA: PropTypes.func.isRequired,
 };

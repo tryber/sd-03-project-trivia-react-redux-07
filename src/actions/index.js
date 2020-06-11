@@ -23,7 +23,7 @@ const storeQuestions = (payload) => ({
 
 export const countRight = () => ({
   type: COUNT_RIGHT_ANSWEAR,
-})
+});
 
 export const getUserData = (name, avatar) => ({
   type: SAVE_USER_DATA,
