@@ -14,6 +14,7 @@ class Quiz extends React.Component {
   componentDidMount() {
     this.loadQuestions();
   }
+  
 
   loadQuestions() {
     const { tolkien, getQuestions } = this.props;
