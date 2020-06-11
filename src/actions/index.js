@@ -8,6 +8,7 @@ export const UPDATE_SCORE = 'UPDATE_SCORE';
 export const CHANGE_DIFFICULTY = 'CHANGE_DIFFICULTY';
 export const TICK_TOCK = 'TICK_TOCK';
 export const RESTORE_CLOCK = 'RESTORE_CLOCK';
+export const COUNT_RIGHT_ANSWEAR = 'COUNT_RIGHT_ANSWEAR';
 
 
 const storeToken = (payload) => ({
@@ -19,6 +20,10 @@ const storeQuestions = (payload) => ({
   type: STORE_QUESTIONS,
   payload,
 });
+
+export const countRight = () => ({
+  type: COUNT_RIGHT_ANSWEAR,
+})
 
 export const getUserData = (name, avatar) => ({
   type: SAVE_USER_DATA,

@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
 import {
-  generateQuestions, updateScore, restoreClock,
+  generateQuestions, updateScore, restoreClock, countRight
 } from '../actions/index';
 import Clock from './Clock';
 
@@ -73,6 +75,7 @@ class Quiz extends React.Component {
 
   clickRigthAnswer() {
     this.saveLocalStorage();
+    this.props.countRightA();
     this.setState({ disabled: true });
   }
 
@@ -96,7 +99,7 @@ class Quiz extends React.Component {
             return <button type="button" disabled={disabled} onClick={() => this.clickWrongAnswer()} data-testid={`wrong-answer${i}`}>{e}</button>;
           })}
           {(index < 4) && <button type="button" onClick={() => this.clickToNext()}>Próxima</button>}
-          {(index === 4) && <button type="button">Finalizar</button>}
+          {(index === 4) && <Link to="/feedback"><button type="button">Finalizar</button></Link>}
           <Clock />
         </div>
       );
@@ -111,6 +114,7 @@ const mapDispatchToProps = (dispatch) => ({
   getQuestions: (e) => dispatch(generateQuestions(e)),
   sumPoints: (points) => dispatch(updateScore(points)),
   restore: () => dispatch(restoreClock()),
+  countRightA: () => dispatch(countRight()),
 });
 
 const mapStateToProps = (state) => ({

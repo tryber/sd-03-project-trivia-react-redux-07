@@ -23,7 +23,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => ({
   userData: state.loginReducer[0],
-  score: state.scoreReducer,
+  score: state.scoreReducer.points,
 });
 
 export default connect(mapStateToProps)(Header);
