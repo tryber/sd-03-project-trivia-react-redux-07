@@ -44,7 +44,7 @@ class LoginArea extends Component {
         gravatarEmail: email,
       },
     };
-    localStorage.setItem('playerInfo', JSON.stringify(storage));
+    localStorage.setItem('state', JSON.stringify(storage));
   }
 
   renderNameInput() {

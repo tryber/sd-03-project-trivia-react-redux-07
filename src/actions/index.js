@@ -31,11 +31,6 @@ export const updateScore = (points) => ({
   points,
 });
 
-export const getDifficulty = (difficulty) => ({
-  type: CHANGE_DIFFICULTY,
-  difficulty,
-});
-
 export const tik = () => ({
   type: TICK_TOCK,
 });
