@@ -15,17 +15,18 @@ class RankingScreen extends Component {
     const { ranking } = this.props;
     return (
       <div>
-        {ranking.sort(function (a, b) { return b.score - a.score; }).map((e) => (
+        {ranking.sort(function (a, b) { return b.score - a.score; }).map((e, i) => (
           <div>
             <img src={`https://www.gravatar.com/avatar/${e.avatar}`} alt="avatar" />
-            <span>{e.name}</span>
-            <span>{e.score}</span>
+            <span data-testid={`player-name-${i}`}>{e.name}</span>
+            <span data-testid={`player-score-${i}`}>{e.score}</span>
           </div>
         ))}
         <Link to="/">
           <button
             onClick={() => this.restartGame()}
             type="button"
+            data-testid="btn-go-home"
           >
             Início
           </button>
