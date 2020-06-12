@@ -2,15 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { clearLoginInfo } from '../actions/index';
-
 
 class RankingScreen extends Component {
-  restartGame() {
-    const { clearlogin } = this.props;
-    clearlogin();
-  }
-
   render() {
     const { ranking } = this.props;
     return (
@@ -25,7 +18,6 @@ class RankingScreen extends Component {
         ))}
         <Link to="/">
           <button
-            onClick={() => this.restartGame()}
             type="button"
             data-testid="btn-go-home"
           >
@@ -41,11 +33,7 @@ const mapStateToProps = (state) => ({
   ranking: state.rankingReducer,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  clearlogin: () => dispatch(clearLoginInfo()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RankingScreen);
+export default connect(mapStateToProps)(RankingScreen);
 
 RankingScreen.propTypes = {
   ranking: PropTypes.shape({
@@ -53,5 +41,4 @@ RankingScreen.propTypes = {
     score: PropTypes.number,
     avatar: PropTypes.string,
   }).isRequired,
-  clearlogin: PropTypes.func.isRequired,
 };

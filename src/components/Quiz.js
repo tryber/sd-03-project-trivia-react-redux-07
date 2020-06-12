@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
-  generateQuestions, updateScore, restoreClock, updateRanking,
+  generateQuestions, updateScore, restoreClock, updateRanking, countRight,
 } from '../actions/index';
 import Clock from './Clock';
 
@@ -73,7 +73,9 @@ class Quiz extends React.Component {
   }
 
   clickRigthAnswer() {
+    const { countRightA } = this.props;
     this.saveLocalStorage();
+    countRightA();
     this.setState({ disabled: true });
   }
 
@@ -82,7 +84,9 @@ class Quiz extends React.Component {
   }
 
   finishQuestions() {
-    const { sendScoreToRanking, name, avatar, score } = this.props;
+    const {
+      sendScoreToRanking, name, avatar, score,
+    } = this.props;
     sendScoreToRanking(name, avatar, score);
     const rankingStored = JSON.parse(localStorage.getItem('ranking'));
     const newRanking = [...rankingStored, { name, score, picture: `https://www.gravatar.com/avatar/${avatar}` }];
@@ -105,7 +109,7 @@ class Quiz extends React.Component {
             return <button type="button" disabled={disabled} onClick={() => this.clickWrongAnswer()} data-testid={`wrong-answer${i}`}>{e}</button>;
           })}
           {(index < 4) && <button type="button" onClick={() => this.clickToNext()}>Próxima</button>}
-          {(index === 4) && <Link to="/ranking"><button type="button" onClick={() => this.finishQuestions()}>Finalizar</button></Link>}
+          {(index === 4) && <Link to="/feedback"><button type="button" onClick={() => this.finishQuestions()}>Próxima</button></Link>}
           <Clock />
         </div>
       );
@@ -121,6 +125,7 @@ const mapDispatchToProps = (dispatch) => ({
   sumPoints: (points) => dispatch(updateScore(points)),
   restore: () => dispatch(restoreClock()),
   sendScoreToRanking: (name, avatar, score) => dispatch(updateRanking(name, avatar, score)),
+  countRightA: () => dispatch(countRight()),
 });
 
 const mapStateToProps = (state) => ({
@@ -129,7 +134,7 @@ const mapStateToProps = (state) => ({
   time: state.counterReducer.count,
   name: state.loginReducer[0].name,
   avatar: state.loginReducer[0].avatar,
-  score: state.scoreReducer,
+  score: state.scoreReducer.points,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
@@ -145,4 +150,5 @@ Quiz.propTypes = {
   score: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   sendScoreToRanking: PropTypes.func.isRequired,
+  countRightA: PropTypes.func.isRequired,
 };

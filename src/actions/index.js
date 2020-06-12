@@ -1,5 +1,5 @@
-import apiTokenService from '../services/apiTokenService.js';
-import getQuestions from '../services/apiQuestionsService.js';
+import apiTokenService from '../services/apiTokenService';
+import getQuestions from '../services/apiQuestionsService';
 
 export const GENERATE_TOKEN = 'GENERATE_TOKEN';
 export const STORE_QUESTIONS = 'STORE_QUESTIONS';
@@ -10,6 +10,7 @@ export const TICK_TOCK = 'TICK_TOCK';
 export const RESTORE_CLOCK = 'RESTORE_CLOCK';
 export const UPDATE_RANKING = 'UPDATE_RANKING';
 export const CLEAR_LOGIN_INFO = 'CLEAR_LOGIN_INFO';
+export const COUNT_RIGHT_ANSWEAR = 'COUNT_RIGHT_ANSWEAR';
 
 
 const storeToken = (payload) => ({
@@ -20,6 +21,10 @@ const storeToken = (payload) => ({
 const storeQuestions = (payload) => ({
   type: STORE_QUESTIONS,
   payload,
+});
+
+export const countRight = () => ({
+  type: COUNT_RIGHT_ANSWEAR,
 });
 
 export const getUserData = (name, avatar) => ({
