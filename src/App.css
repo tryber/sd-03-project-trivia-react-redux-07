@@ -92,3 +92,7 @@ input {
 .questions-header > img {
   border-radius: 50%;
 }
+
+span{
+  margin: 20px;
+}

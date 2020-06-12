@@ -33,9 +33,20 @@ class LoginArea extends Component {
 
   clickToStartGame() {
     const { storeToken, saveUserData } = this.props;
-    const { name, avatar } = this.state;
+    const { name, avatar, email } = this.state;
     storeToken();
     saveUserData(name, avatar);
+    const storage = {
+      player: {
+        name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(storage));
+    const blankStorage = JSON.parse(localStorage.getItem('ranking'));
+    if (!blankStorage) localStorage.setItem('ranking', JSON.stringify([]));
   }
 
   renderNameInput() {

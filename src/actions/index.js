@@ -1,10 +1,16 @@
-import apiTokenService from '../services/apiTokenService.js';
-import getQuestions from '../services/apiQuestionsService.js';
+import apiTokenService from '../services/apiTokenService';
+import getQuestions from '../services/apiQuestionsService';
 
 export const GENERATE_TOKEN = 'GENERATE_TOKEN';
 export const STORE_QUESTIONS = 'STORE_QUESTIONS';
 export const SAVE_USER_DATA = 'SAVE_USER_DATA';
 export const UPDATE_SCORE = 'UPDATE_SCORE';
+export const CHANGE_DIFFICULTY = 'CHANGE_DIFFICULTY';
+export const TICK_TOCK = 'TICK_TOCK';
+export const RESTORE_CLOCK = 'RESTORE_CLOCK';
+export const UPDATE_RANKING = 'UPDATE_RANKING';
+export const CLEAR_LOGIN_INFO = 'CLEAR_LOGIN_INFO';
+export const COUNT_RIGHT_ANSWEAR = 'COUNT_RIGHT_ANSWEAR';
 
 
 const storeToken = (payload) => ({
@@ -17,6 +23,10 @@ const storeQuestions = (payload) => ({
   payload,
 });
 
+export const countRight = () => ({
+  type: COUNT_RIGHT_ANSWEAR,
+});
+
 export const getUserData = (name, avatar) => ({
   type: SAVE_USER_DATA,
   name,
@@ -26,6 +36,25 @@ export const getUserData = (name, avatar) => ({
 export const updateScore = (points) => ({
   type: UPDATE_SCORE,
   points,
+});
+
+export const tik = () => ({
+  type: TICK_TOCK,
+});
+
+export const restoreClock = () => ({
+  type: RESTORE_CLOCK,
+});
+
+export const updateRanking = (name, avatar, score) => ({
+  type: UPDATE_RANKING,
+  name,
+  avatar,
+  score,
+});
+
+export const clearLoginInfo = () => ({
+  type: CLEAR_LOGIN_INFO,
 });
 
 export const generateToken = () => (
