@@ -20,8 +20,16 @@ class Feedback extends React.Component {
         <FeedbackAnswears totalAnswears={totalAns} />
         <p data-testid="feedback-total-question">{`Você acertou ${totalAns} questões!`}</p>
         <p data-testid="feedback-total-score">{`Fez um total de ${scorePoints} pontos`}</p>
-        <Link to="/gamepage"><button type="button" onClick={() => this.restartGame()} data-testid="btn-play-again">Jogar novamente</button></Link>
-        <Link to="/rankingscreen"><button type="button" onClick={() => this.restartGame()} data-testid="btn-ranking">Ver Ranking</button></Link>
+        <Link to="/gamepage">
+          <button type="button" onClick={() => this.restartGame()} data-testid="btn-play-again">
+            Jogar novamente
+          </button>
+        </Link>
+        <Link to="/rankingscreen">
+          <button type="button" onClick={() => this.restartGame()} data-testid="btn-ranking">
+            Ver Ranking
+          </button>
+        </Link>
       </div>
     );
   }
@@ -41,4 +49,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
 Feedback.propTypes = {
   totalAns: PropTypes.number.isRequired,
   scorePoints: PropTypes.number.isRequired,
+  clearlogin: PropTypes.func.isRequired,
 };
