@@ -105,7 +105,11 @@ class Quiz extends React.Component {
         )}
         {(index === 4) && (
           <Link to="/feedback">
-            <button type="button" onClick={() => this.finishQuestions()}>
+            <button
+              type="button"
+              onClick={() => this.finishQuestions()}
+              data-testid="btn-next"
+            >
               Próxima
             </button>
           </Link>

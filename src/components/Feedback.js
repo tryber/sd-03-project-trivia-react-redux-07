@@ -18,8 +18,16 @@ class Feedback extends React.Component {
       <div>
         <Header />
         <FeedbackAnswears totalAnswears={totalAns} />
-        <p data-testid="feedback-total-question">{`Você acertou ${totalAns} questões!`}</p>
-        <p data-testid="feedback-total-score">{`Fez um total de ${scorePoints} pontos`}</p>
+        <div>
+          <span>Você acertou</span>
+          <span data-testid="feedback-total-question">{totalAns}</span>
+          <span>questões</span>
+        </div>
+        <div>
+          <span>Fez um total de</span>
+          <span data-testid="feedback-total-score">{scorePoints}</span>
+          <span>pontos</span>
+        </div>
         <Link to="/gamepage">
           <button type="button" onClick={() => this.restartGame()} data-testid="btn-play-again">
             Jogar novamente
