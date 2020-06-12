@@ -103,4 +103,4 @@ export default connect(null, mapDispatchToProps)(LoginArea);
 LoginArea.propTypes = {
   storeToken: PropTypes.func.isRequired,
   saveUserData: PropTypes.func.isRequired,
-}
+};
