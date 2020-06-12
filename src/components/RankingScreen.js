@@ -37,7 +37,6 @@ class RankingScreen extends Component {
   }
 }
 
-
 const mapStateToProps = (state) => ({
   ranking: state.rankingReducer,
 });
