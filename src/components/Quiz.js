@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { generateQuestions } from '../actions/index';
 
 import './Quiz.css';
@@ -85,8 +86,24 @@ class Quiz extends React.Component {
     const { index } = this.state;
     return (
       <div>
-        {(index < 4) && <button type="button" onClick={() => this.clickToNext()}>Próxima</button>}
-        {(index === 4) && <button type="button">Finalizar</button>}
+        {(index < 4) && (
+          <button
+            type="button"
+            onClick={() => this.clickToNext()}
+            data-testid="btn-next"
+          >
+            Próxima
+          </button>
+        )}
+        {(index === 4) && (
+          <button
+            type="button"
+            onClick={<Link to="/Feedback" />}
+            data-testid="btn-next"
+          >
+            Próxima
+          </button>
+        )}
       </div>
     );
   }
