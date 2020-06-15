@@ -33,8 +33,13 @@ class Feedback extends React.Component {
           <span data-testid="feedback-total-score">{scorePoints}</span>
           <span>pontos</span>
         </div>
-        <Link to="/">
+        <Link to="/gamepage">
           <button type="button" onClick={() => this.newGame()} data-testid="btn-play-again">
+            Tentar novamente
+          </button>
+        </Link>
+        <Link to="/">
+          <button type="button" onClick={() => this.restartGame()} data-testid="btn-play-again">
             Jogar novamente
           </button>
         </Link>
