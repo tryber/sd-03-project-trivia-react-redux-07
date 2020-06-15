@@ -186,18 +186,23 @@ class Quiz extends React.Component {
     localStorage.setItem('ranking', JSON.stringify(newRanking));
   }
 
-  render() {
+  questionBuilder() {
     const { questions, freezing } = this.props;
     const { index, questionClicked } = this.state;
+    return (
+      <div>
+        <p data-testid="question-category">{`Categoria: ${questions[index].category}`}</p>
+        <p data-testid="question-text">{questions[index].question}</p>
+        {(questionClicked || freezing) ? this.afterTheCLick() : this.beforeTheCLick() }
+        {(questionClicked || freezing) ? this.nextButton() : <Clock />}
+      </div>
+    );
+  }
+
+  render() {
+    const { questions } = this.props;
     if (questions.length > 0) {
-      return (
-        <div>
-          <p data-testid="question-category">{`Categoria: ${questions[index].category}`}</p>
-          <p data-testid="question-text">{questions[index].question}</p>
-          {(questionClicked || freezing) ? this.afterTheCLick() : this.beforeTheCLick() }
-          {(questionClicked || freezing) ? this.nextButton() : <Clock />}
-        </div>
-      );
+      return this.questionBuilder();
     }
     return (
       <p>Loading Questions</p>
