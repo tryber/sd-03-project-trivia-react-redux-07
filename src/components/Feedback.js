@@ -17,6 +17,14 @@ class Feedback extends React.Component {
     clearpoints();
   }
 
+  tryAgain() {
+    return (
+      <Link to="/gamepage">
+        <button type="button" onClick={() => this.newGame()}>Tentar novamente</button>
+      </Link>
+    );
+  }
+
   render() {
     const { totalAns, scorePoints } = this.props;
     return (
@@ -33,11 +41,7 @@ class Feedback extends React.Component {
           <span data-testid="feedback-total-score">{scorePoints}</span>
           <span>pontos</span>
         </div>
-        <Link to="/gamepage">
-          <button type="button" onClick={() => this.newGame()}>
-            Tentar novamente
-          </button>
-        </Link>
+        {this.tryAgain()}
         <Link to="/">
           <button type="button" onClick={() => this.restartGame()} data-testid="btn-play-again">
             Jogar novamente
