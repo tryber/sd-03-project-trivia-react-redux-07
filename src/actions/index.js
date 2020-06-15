@@ -11,6 +11,8 @@ export const RESTORE_CLOCK = 'RESTORE_CLOCK';
 export const UPDATE_RANKING = 'UPDATE_RANKING';
 export const CLEAR_LOGIN_INFO = 'CLEAR_LOGIN_INFO';
 export const COUNT_RIGHT_ANSWEAR = 'COUNT_RIGHT_ANSWEAR';
+export const CLEAR_LOGIN_POINTS = 'CLEAR_LOGIN_POINTS';
+export const CLOCK_FREEZED = 'CLOCK_FREEZED';
 
 
 const storeToken = (payload) => ({
@@ -46,6 +48,10 @@ export const restoreClock = () => ({
   type: RESTORE_CLOCK,
 });
 
+export const freezeClock = () => ({
+  type: CLOCK_FREEZED,
+});
+
 export const updateRanking = (name, avatar, score) => ({
   type: UPDATE_RANKING,
   name,
@@ -55,6 +61,10 @@ export const updateRanking = (name, avatar, score) => ({
 
 export const clearLoginInfo = () => ({
   type: CLEAR_LOGIN_INFO,
+});
+
+export const clearLoginPoints = () => ({
+  type: CLEAR_LOGIN_POINTS,
 });
 
 export const generateToken = () => (

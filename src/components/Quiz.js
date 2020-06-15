@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import {
-  generateQuestions, updateScore, restoreClock, updateRanking, countRight,
+  generateQuestions, updateScore, restoreClock, updateRanking, countRight, freezeClock,
 } from '../actions/index';
 import Clock from './Clock';
 
@@ -70,6 +70,8 @@ class Quiz extends React.Component {
   }
 
   afterTheCLick() {
+    const { pausecounter } = this.props;
+    pausecounter();
     let count = -1;
     return (
       this.callAnswers().map((e) => {
@@ -94,26 +96,28 @@ class Quiz extends React.Component {
     const { index } = this.state;
     return (
       <div>
-        {(index < 4) && (
-          <button
-            type="button"
-            onClick={() => this.clickToNext()}
-            data-testid="btn-next"
-          >
-            Próxima
-          </button>
-        )}
-        {(index === 4) && (
-          <Link to="/feedback">
+        <div>
+          {(index < 4) && (
             <button
               type="button"
-              onClick={() => this.finishQuestions()}
+              onClick={() => this.clickToNext()}
               data-testid="btn-next"
             >
               Próxima
             </button>
-          </Link>
-        )}
+          )}
+          {(index === 4) && (
+            <Link to="/feedback">
+              <button
+                type="button"
+                onClick={() => this.finishQuestions()}
+                data-testid="btn-next"
+              >
+                Próxima
+              </button>
+            </Link>
+          )}
+        </div>
       </div>
     );
   }
@@ -183,16 +187,15 @@ class Quiz extends React.Component {
   }
 
   render() {
-    const { questions } = this.props;
+    const { questions, freezing } = this.props;
     const { index, questionClicked } = this.state;
     if (questions.length > 0) {
       return (
         <div>
           <p data-testid="question-category">{`Categoria: ${questions[index].category}`}</p>
           <p data-testid="question-text">{questions[index].question}</p>
-          {(questionClicked) ? this.afterTheCLick() : this.beforeTheCLick() }
-          {(questionClicked) ? this.nextButton() : null }
-          <Clock />
+          {(questionClicked || freezing) ? this.afterTheCLick() : this.beforeTheCLick() }
+          {(questionClicked || freezing) ? this.nextButton() : <Clock />}
         </div>
       );
     }
@@ -208,6 +211,7 @@ const mapDispatchToProps = (dispatch) => ({
   restore: () => dispatch(restoreClock()),
   sendScoreToRanking: (name, avatar, score) => dispatch(updateRanking(name, avatar, score)),
   countRightA: () => dispatch(countRight()),
+  pausecounter: () => dispatch(freezeClock()),
 });
 
 const mapStateToProps = (state) => ({
@@ -217,6 +221,7 @@ const mapStateToProps = (state) => ({
   name: state.loginReducer[0].name,
   avatar: state.loginReducer[0].avatar,
   score: state.scoreReducer.points,
+  freezing: state.counterReducer.freeze,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
@@ -233,4 +238,6 @@ Quiz.propTypes = {
   name: PropTypes.string.isRequired,
   sendScoreToRanking: PropTypes.func.isRequired,
   countRightA: PropTypes.func.isRequired,
+  freezing: PropTypes.bool.isRequired,
+  pausecounter: PropTypes.func.isRequired,
 };

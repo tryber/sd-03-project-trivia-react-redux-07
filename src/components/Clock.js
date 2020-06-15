@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { tik } from '../actions/index';
+import { tik, freezeClock } from '../actions/index';
 
 class Clock extends React.Component {
   componentDidMount() {
@@ -15,6 +15,12 @@ class Clock extends React.Component {
     clearInterval(this.timerID);
   }
 
+  freezeTheClock() {
+    const { pausecounter } = this.props;
+    pausecounter();
+    clearInterval(this.timerID);
+  }
+
   tick() {
     const { tok } = this.props;
     tok();
@@ -22,7 +28,7 @@ class Clock extends React.Component {
 
   render() {
     const { time } = this.props;
-    if (time === 0) clearInterval(this.timerID);
+    if (time === 0) this.freezeTheClock();
     return (
       <div>
         <p>{`Tempo: ${time}`}</p>
@@ -37,6 +43,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   tok: () => dispatch(tik()),
+  pausecounter: () => dispatch(freezeClock()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clock);
@@ -44,4 +51,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Clock);
 Clock.propTypes = {
   time: PropTypes.number.isRequired,
   tok: PropTypes.func.isRequired,
+  pausecounter: PropTypes.func.isRequired,
 };

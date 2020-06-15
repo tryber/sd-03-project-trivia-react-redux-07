@@ -1,4 +1,9 @@
-import { UPDATE_SCORE, CLEAR_LOGIN_INFO, COUNT_RIGHT_ANSWEAR } from '../actions/index';
+import {
+  UPDATE_SCORE,
+  CLEAR_LOGIN_INFO,
+  COUNT_RIGHT_ANSWEAR,
+  CLEAR_LOGIN_POINTS,
+} from '../actions/index';
 
 const INITIAL_STATE = {
   points: 0,
@@ -8,6 +13,7 @@ const INITIAL_STATE = {
 const scoreReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CLEAR_LOGIN_INFO: return { ...state, points: 0 };
+    case CLEAR_LOGIN_POINTS: return { ...state, points: 0 };
     case UPDATE_SCORE: {
       return {
         ...state,
