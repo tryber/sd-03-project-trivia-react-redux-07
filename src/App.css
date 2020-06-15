@@ -76,3 +76,23 @@ input {
   margin-top: 10px;
   width: 150px;
 }
+
+.questions-header {
+  background-color: #282c34;
+  color: white;
+  display: flex;
+  justify-content: flex-start;
+  padding: 50px;
+}
+
+.questions-header > p {
+  margin: 20px;
+}
+
+.questions-header > img {
+  border-radius: 50%;
+}
+
+span{
+  margin: 20px;
+}

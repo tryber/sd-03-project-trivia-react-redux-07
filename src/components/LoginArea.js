@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { generateToken } from '../actions/index';
+import { generateToken, getUserData } from '../actions/index';
 
 class LoginArea extends Component {
   constructor(props) {
@@ -12,15 +12,8 @@ class LoginArea extends Component {
     this.state = {
       name: '',
       email: '',
-      url: '',
+      avatar: '',
     };
-    this.requestAPIToken = this.requestAPIToken.bind(this);
-  }
-
-  componentDidUpdate() {
-    console.log('entrouNoDidUpdate');
-    const { tolkien } = this.props;
-    localStorage.setItem('token', tolkien);
   }
 
   changeName(e) {
@@ -29,7 +22,7 @@ class LoginArea extends Component {
 
   changeEmail(e) {
     const hash = md5(e.target.value);
-    this.setState({ email: e.target.value, url: hash });
+    this.setState({ email: e.target.value, avatar: hash });
   }
 
   isDisabled() {
@@ -38,15 +31,28 @@ class LoginArea extends Component {
     return false;
   }
 
-  requestAPIToken() {
-    const { storeToken } = this.props;
+  clickToStartGame() {
+    const { storeToken, saveUserData } = this.props;
+    const { name, avatar, email } = this.state;
     storeToken();
+    saveUserData(name, avatar);
+    const storage = {
+      player: {
+        name,
+        assertions: 0,
+        score: 0,
+        gravatarEmail: email,
+      },
+    };
+    localStorage.setItem('state', JSON.stringify(storage));
+    const blankStorage = JSON.parse(localStorage.getItem('ranking'));
+    if (!blankStorage) localStorage.setItem('ranking', JSON.stringify([]));
   }
 
-  render() {
-    const { name, email, url } = this.state;
+  renderNameInput() {
+    const { name } = this.state;
     return (
-      <div className="login-area">
+      <div>
         <label htmlFor="name">Nome do Jogador</label>
         <input
           type="text"
@@ -55,6 +61,14 @@ class LoginArea extends Component {
           onChange={(e) => this.changeName(e)}
           value={name}
         />
+      </div>
+    );
+  }
+
+  renderEmailInput() {
+    const { email } = this.state;
+    return (
+      <div>
         <label htmlFor="email">E-mail do Gravatar</label>
         <input
           type="email"
@@ -63,13 +77,23 @@ class LoginArea extends Component {
           onChange={(e) => this.changeEmail(e)}
           value={email}
         />
-        <img src={`https://www.gravatar.com/avatar/${url}`} alt="avatar" />
+      </div>
+    );
+  }
+
+  render() {
+    const { avatar } = this.state;
+    return (
+      <div className="login-area">
+        {this.renderNameInput()}
+        {this.renderEmailInput()}
+        <img src={`https://www.gravatar.com/avatar/${avatar}`} alt="avatar" />
         <Link to="/gamepage">
           <button
             type="button"
             className="btn-play"
             data-testid="btn-play"
-            onClick={this.requestAPIToken}
+            onClick={() => this.clickToStartGame()}
             disabled={this.isDisabled()}
           >
             JOGAR
@@ -82,15 +106,12 @@ class LoginArea extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   storeToken: () => dispatch(generateToken()),
+  saveUserData: (name, avatar) => dispatch(getUserData(name, avatar)),
 });
 
-const mapStateToProps = (state) => ({
-  tolkien: state.apiReducer.token,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginArea);
+export default connect(null, mapDispatchToProps)(LoginArea);
 
 LoginArea.propTypes = {
   storeToken: PropTypes.func.isRequired,
-  tolkien: PropTypes.shape({ token: '' }).isRequired,
+  saveUserData: PropTypes.func.isRequired,
 };
