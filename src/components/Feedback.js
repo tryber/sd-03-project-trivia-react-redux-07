@@ -34,7 +34,7 @@ class Feedback extends React.Component {
           <span>pontos</span>
         </div>
         <Link to="/gamepage">
-          <button type="button" onClick={() => this.newGame()} data-testid="btn-play-again">
+          <button type="button" onClick={() => this.newGame()}>
             Tentar novamente
           </button>
         </Link>
