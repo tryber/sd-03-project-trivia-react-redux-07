@@ -1,23 +1,37 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 
 class Header extends Component {
   render() {
     const { userData, score } = this.props;
     return (
-      <div className="questions-header">
-        {userData && (
-        <img
-          src={`https://www.gravatar.com/avatar/${userData.avatar}`}
-          data-testid="header-profile-picture"
-          alt="avatar"
-        />
-        )}
-        {userData && <p data-testid="header-player-name">{`Jogador: ${userData.name}`}</p>}
-        <div>
-          <span>Pontos:</span>
-          <span data-testid="header-score">{score}</span>
+      <div className="questions-header row bg-dark align-items-center">
+        <div className="container">
+          <div className="media">
+            {userData && (
+              <img
+                className="mr-3 rounded"
+                src={`https://www.gravatar.com/avatar/${userData.avatar}`}
+                data-testid="header-profile-picture"
+                alt="avatar"
+              />
+            )}
+            {userData && (
+              <div className="media-body">
+                <p
+                  data-testid="header-player-name"
+                  className="h4 text-white"
+                >{`Jogador: ${userData.name}`}</p>
+                <p className="text-white">
+                  Pontos:
+                  <span data-testid="header-score" className="text-white ml-2">
+                    {score}
+                  </span>
+                </p>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     );
