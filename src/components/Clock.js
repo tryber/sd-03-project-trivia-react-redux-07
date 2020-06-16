@@ -27,8 +27,9 @@ class Clock extends React.Component {
   }
 
   render() {
-    const { time } = this.props;
+    const { time, freezing } = this.props;
     if (time === 0) this.freezeTheClock();
+    if (freezing) clearInterval(this.timerID);
     return (
       <div>
         <p>{`Tempo: ${time}`}</p>
@@ -39,6 +40,7 @@ class Clock extends React.Component {
 
 const mapStateToProps = (state) => ({
   time: state.counterReducer.count,
+  freezing: state.counterReducer.freeze,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -52,4 +54,5 @@ Clock.propTypes = {
   time: PropTypes.number.isRequired,
   tok: PropTypes.func.isRequired,
   pausecounter: PropTypes.func.isRequired,
+  freezing: PropTypes.bool.isRequired,
 };

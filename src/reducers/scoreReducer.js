@@ -12,8 +12,8 @@ const INITIAL_STATE = {
 
 const scoreReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case CLEAR_LOGIN_INFO: return { ...state, points: 0 };
-    case CLEAR_LOGIN_POINTS: return { ...state, points: 0 };
+    case CLEAR_LOGIN_INFO: return { ...state, points: 0, answers: 0 };
+    case CLEAR_LOGIN_POINTS: return { ...state, points: 0, answers: 0 };
     case UPDATE_SCORE: {
       return {
         ...state,

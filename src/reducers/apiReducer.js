@@ -11,6 +11,7 @@ const apiReducer = (state = initialState, action) => {
       localStorage.setItem('token', action.payload.data.token);
       return { ...state, token: action.payload.data.token };
     case STORE_QUESTIONS:
+      console.log(state);
       return {
         ...state,
         questions: [...action.payload.data.results],

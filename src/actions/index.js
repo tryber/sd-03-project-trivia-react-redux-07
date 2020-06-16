@@ -13,7 +13,9 @@ export const CLEAR_LOGIN_INFO = 'CLEAR_LOGIN_INFO';
 export const COUNT_RIGHT_ANSWEAR = 'COUNT_RIGHT_ANSWEAR';
 export const CLEAR_LOGIN_POINTS = 'CLEAR_LOGIN_POINTS';
 export const CLOCK_FREEZED = 'CLOCK_FREEZED';
-
+export const CONFIG_CATEGORY = 'CONFIG_CATEGORY';
+export const CONFIG_DIFFICULTY = 'CONFIG_DIFFICULTY';
+export const CONFIG_TYPE = 'CONFIG_TYPE';
 
 const storeToken = (payload) => ({
   type: GENERATE_TOKEN,
@@ -73,8 +75,24 @@ export const generateToken = () => (
   }
 );
 
-export const generateQuestions = (token) => (
+export const generateQuestions = (tolkien, confCategory, confDifficulty, confType) => (
   (dispatch) => {
-    getQuestions(token).then((response) => dispatch(storeQuestions(response)));
+    getQuestions(tolkien, confCategory, confDifficulty, confType)
+      .then((response) => dispatch(storeQuestions(response)));
   }
 );
+
+export const changeCategory = (confCategory) => ({
+  type: CONFIG_CATEGORY,
+  confCategory,
+});
+
+export const changeDifficulty = (confDifficulty) => ({
+  type: CONFIG_DIFFICULTY,
+  confDifficulty,
+});
+
+export const changeType = (confType) => ({
+  type: CONFIG_TYPE,
+  confType,
+});
