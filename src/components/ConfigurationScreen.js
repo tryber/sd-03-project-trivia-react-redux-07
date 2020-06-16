@@ -55,9 +55,12 @@ class ConfigurationScreen extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="container">
         <title data-testid="settings-title">Configurações</title>
-        <select onChange={(elem) => this.handleCategory(elem.target.value)}>
+        <h1 className="display-3 text-center">Configurações</h1>
+        <div className="d-flex justify-content-center flex-column">
+        <p className="lead mb-3">Selecionar Categorias de questões: </p>
+        <select className="mb-3" onChange={(elem) => this.handleCategory(elem.target.value)}>
           <option value="" />
           {
             arrCategory.map((elem) => (
@@ -65,10 +68,12 @@ class ConfigurationScreen extends React.Component {
             ))
           }
         </select>
-        <select onChange={(elem) => this.handleDifficulty(elem.target.value)}>
+        <p className="lead mb-3">Selecionar dificuldade: </p>
+        <select className="mb-3" onChange={(elem) => this.handleDifficulty(elem.target.value)}>
           <option value="" />
           {arrDifficulty.map((elem) => (<option key={elem}>{elem}</option>))}
         </select>
+        <p className="lead mb-3">Selecionar múltipla escolha ou verdadeiro/falso: </p>
         <select onChange={(elem) => this.handleType(elem.target.value)}>
           <option value="" />
           {
@@ -77,7 +82,8 @@ class ConfigurationScreen extends React.Component {
             ))
           }
         </select>
-        <Link to="/">Voltar </Link>
+        </div>
+        <Link to="/" className="btn btn-primary btn-lg mt-3">Voltar </Link>
       </div>
     );
   }

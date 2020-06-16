@@ -11,3 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.questions-header {
+  min-height: 150px;
+}
+
+.card {
+  width: 20rem;
+}
+
+.list-group {
+  width: 40rem;
+}

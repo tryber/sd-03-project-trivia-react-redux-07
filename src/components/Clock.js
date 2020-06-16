@@ -32,7 +32,7 @@ class Clock extends React.Component {
     if (freezing) clearInterval(this.timerID);
     return (
       <div>
-        <p>{`Tempo: ${time}`}</p>
+        <p className="lead p-2">{`Tempo: ${time}`}</p>
       </div>
     );
   }

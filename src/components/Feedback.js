@@ -20,7 +20,7 @@ class Feedback extends React.Component {
   tryAgain() {
     return (
       <Link to="/gamepage">
-        <button type="button" onClick={() => this.newGame()}>Tentar novamente</button>
+        <button className="btn btn-primary btn-lg m-2" type="button" onClick={() => this.newGame()}>Tentar novamente</button>
       </Link>
     );
   }
@@ -30,28 +30,33 @@ class Feedback extends React.Component {
     return (
       <div>
         <Header />
-        <FeedbackAnswears totalAnswears={totalAns} />
-        <div>
-          <span>Você acertou</span>
-          <span data-testid="feedback-total-question">{totalAns}</span>
-          <span>questões</span>
+        <div className="container">
+          <div className="jumbotron mt-3">
+            <FeedbackAnswears totalAnswears={totalAns} />
+            <div p-3>
+              <span className="lead">Você acertou </span>
+              <span className="lead" data-testid="feedback-total-question">{totalAns}</span>
+              <span className="lead"> questões</span>
+            </div>
+            <div p-3 mb-3>
+              <span className="lead">Fez um total de </span>
+              <span className="lead" data-testid="feedback-total-score">{scorePoints}</span>
+              <span className="lead"> pontos</span>
+              <hr />
+            </div>
+            {this.tryAgain()}
+            <Link to="/">
+              <button className="btn btn-primary btn-lg m-2" type="button" onClick={() => this.restartGame()} data-testid="btn-play-again">
+                Jogar novamente
+              </button>
+            </Link>
+            <Link to="/rankingscreen">
+              <button className="btn btn-info btn-lg m-2" type="button" onClick={() => this.restartGame()} data-testid="btn-ranking">
+                Ver Ranking
+              </button>
+            </Link>
+          </div>
         </div>
-        <div>
-          <span>Fez um total de</span>
-          <span data-testid="feedback-total-score">{scorePoints}</span>
-          <span>pontos</span>
-        </div>
-        {this.tryAgain()}
-        <Link to="/">
-          <button type="button" onClick={() => this.restartGame()} data-testid="btn-play-again">
-            Jogar novamente
-          </button>
-        </Link>
-        <Link to="/rankingscreen">
-          <button type="button" onClick={() => this.restartGame()} data-testid="btn-ranking">
-            Ver Ranking
-          </button>
-        </Link>
       </div>
     );
   }

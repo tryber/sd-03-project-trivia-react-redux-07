@@ -5,7 +5,7 @@ class ButtonToConfig extends React.Component {
   render() {
     return (
       <div>
-        <Link to="/Configuration" data-testid="btn-settings">CONFIGURAR</Link>
+        <Link to="/Configuration" data-testid="btn-settings" className="btn btn-secondary btn-block mb-3">CONFIGURAR</Link>
       </div>
     );
   }

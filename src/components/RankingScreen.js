@@ -7,17 +7,20 @@ class RankingScreen extends Component {
   render() {
     const { ranking } = this.props;
     return (
-      <div>
-        <h1 data-testid="ranking-title">RANKING</h1>
-        {ranking.sort(function (a, b) { return b.score - a.score; }).map((e, i) => (
-          <div>
-            <img src={`https://www.gravatar.com/avatar/${e.avatar}`} alt="avatar" />
-            <span data-testid={`player-name-${i}`}>{e.name}</span>
-            <span data-testid={`player-score-${i}`}>{e.score}</span>
-          </div>
-        ))}
+      <div className="container">
+        <h1 className="display-3 text-center" data-testid="ranking-title">RANKING</h1>
+        <ul className="list-group mb-4">
+          {ranking.sort(function (a, b) { return b.score - a.score; }).map((e, i) => (
+            <li className="list-group-item">
+              <img className="rounded" src={`https://www.gravatar.com/avatar/${e.avatar}`} alt="avatar" />
+              <span className="lead px-3" data-testid={`player-name-${i}`}>{e.name}</span>
+              <span className="badge badge-primary px-3" data-testid={`player-score-${i}`}>{e.score}</span>
+            </li>
+          ))}
+        </ul>
         <Link to="/">
           <button
+            className="btn btn-primary"
             type="button"
             data-testid="btn-go-home"
           >

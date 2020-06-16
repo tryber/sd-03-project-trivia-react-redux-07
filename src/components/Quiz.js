@@ -50,7 +50,7 @@ class Quiz extends React.Component {
       this.callAnswers().map((e) => {
         if (e[1] === 'correct') {
           return (
-            <button type="button" data-testid="correct-answer" onClick={() => this.rightChoice()}>
+            <button type="button" className="btn btn-secondary m-1" data-testid="correct-answer" onClick={() => this.rightChoice()}>
               {e[0]}
             </button>
           );
@@ -58,6 +58,7 @@ class Quiz extends React.Component {
         count += 1;
         return (
           <button
+            className="btn btn-secondary m-1"
             type="button"
             data-testid={`wrong-answer${count}`}
             onClick={() => this.wrongChoice()}
@@ -77,14 +78,14 @@ class Quiz extends React.Component {
       this.callAnswers().map((e) => {
         if (e[1] === 'correct') {
           return (
-            <button type="button" data-testid="correct-answer" className="Correct" disabled>
+            <button type="button" data-testid="correct-answer" className="Correct btn btn-success m-1" disabled>
               {e[0]}
             </button>
           );
         }
         count += 1;
         return (
-          <button type="button" data-testid={`wrong-answer${count}`} className="Wrong" disabled>
+          <button type="button" data-testid={`wrong-answer${count}`} className="Wrong btn btn-danger m-1" disabled>
             {e}
           </button>
         );
@@ -99,6 +100,7 @@ class Quiz extends React.Component {
         <div>
           {(index < 4) && (
             <button
+              className="btn btn-primary m-1"
               type="button"
               onClick={() => this.clickToNext()}
               data-testid="btn-next"
@@ -109,6 +111,7 @@ class Quiz extends React.Component {
           {(index === 4) && (
             <Link to="/feedback">
               <button
+                className="btn btn-primary m-1"
                 type="button"
                 onClick={() => this.finishQuestions()}
                 data-testid="btn-next"
@@ -196,11 +199,15 @@ class Quiz extends React.Component {
     const { questions, freezing } = this.props;
     const { index, questionClicked } = this.state;
     return (
-      <div>
-        <p data-testid="question-category">{`Categoria: ${questions[index].category}`}</p>
-        <p data-testid="question-text">{questions[index].question}</p>
-        {(questionClicked || freezing) ? this.afterTheCLick() : this.beforeTheCLick() }
-        {(questionClicked || freezing) ? this.nextButton() : <Clock />}
+      <div className="card m-5">
+        <div className="card-header">
+          <p className="h5" data-testid="question-category">{`Categoria: ${questions[index].category}`}</p>
+        </div>
+        <div className="card-body">
+          <p data-testid="question-text" className="card-text">{questions[index].question}</p>
+          {(questionClicked || freezing) ? this.afterTheCLick() : this.beforeTheCLick() }
+          {(questionClicked || freezing) ? this.nextButton() : <Clock />}
+        </div>
       </div>
     );
   }
@@ -211,7 +218,7 @@ class Quiz extends React.Component {
       return this.questionBuilder();
     }
     return (
-      <p>Loading Questions</p>
+      <p className="display-4">Loading Questions...</p>
     );
   }
 }

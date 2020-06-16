@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import ButtonToConfig from './ButtonToConfig';
 import { generateToken, getUserData } from '../actions/index';
 
 class LoginArea extends Component {
@@ -52,9 +53,10 @@ class LoginArea extends Component {
   renderNameInput() {
     const { name } = this.state;
     return (
-      <div>
+      <div className="form-group">
         <label htmlFor="name">Nome do Jogador</label>
         <input
+          className="form-control"
           type="text"
           data-testid="input-player-name"
           id="name"
@@ -68,10 +70,11 @@ class LoginArea extends Component {
   renderEmailInput() {
     const { email } = this.state;
     return (
-      <div>
+      <div className="form-group">
         <label htmlFor="email">E-mail do Gravatar</label>
         <input
           type="email"
+          className="form-control"
           data-testid="input-gravatar-email"
           id="email"
           onChange={(e) => this.changeEmail(e)}
@@ -84,22 +87,23 @@ class LoginArea extends Component {
   render() {
     const { avatar } = this.state;
     return (
-      <div className="login-area">
+      <form className="mt-3">
+        <img className="rounded" src={`https://www.gravatar.com/avatar/${avatar}`} alt="avatar" />
         {this.renderNameInput()}
         {this.renderEmailInput()}
-        <img src={`https://www.gravatar.com/avatar/${avatar}`} alt="avatar" />
         <Link to="/gamepage">
           <button
             type="button"
-            className="btn-play"
+            className="btn btn-primary btn-block mb-3"
             data-testid="btn-play"
             onClick={() => this.clickToStartGame()}
             disabled={this.isDisabled()}
           >
             JOGAR
           </button>
+          <ButtonToConfig />
         </Link>
-      </div>
+      </form>
     );
   }
 }
