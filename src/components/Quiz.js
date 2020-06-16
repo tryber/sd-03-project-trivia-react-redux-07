@@ -123,8 +123,14 @@ class Quiz extends React.Component {
   }
 
   loadQuestions() {
-    const { tolkien, getQuestions } = this.props;
-    getQuestions(tolkien);
+    const {
+      tolkien,
+      getQuestions,
+      confCategory,
+      confDifficulty,
+      confType,
+    } = this.props;
+    getQuestions(tolkien, confCategory, confDifficulty, confType);
   }
 
   clickToNext() {
@@ -211,7 +217,12 @@ class Quiz extends React.Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getQuestions: (e) => dispatch(generateQuestions(e)),
+  getQuestions: (tolkien, confCategory, confDifficulty, confType) => dispatch(generateQuestions(
+    tolkien,
+    confCategory,
+    confDifficulty,
+    confType,
+  )),
   sumPoints: (points) => dispatch(updateScore(points)),
   restore: () => dispatch(restoreClock()),
   sendScoreToRanking: (name, avatar, score) => dispatch(updateRanking(name, avatar, score)),
@@ -227,6 +238,9 @@ const mapStateToProps = (state) => ({
   avatar: state.loginReducer[0].avatar,
   score: state.scoreReducer.points,
   freezing: state.counterReducer.freeze,
+  confCategory: state.configReducer.confCategory,
+  confDifficulty: state.configReducer.confDifficulty,
+  confType: state.configReducer.confType,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Quiz);
@@ -245,4 +259,7 @@ Quiz.propTypes = {
   countRightA: PropTypes.func.isRequired,
   freezing: PropTypes.bool.isRequired,
   pausecounter: PropTypes.func.isRequired,
+  confCategory: PropTypes.string.isRequired,
+  confDifficulty: PropTypes.string.isRequired,
+  confType: PropTypes.string.isRequired,
 };
